@@ -22,11 +22,16 @@ namespace Noticer.ViewModels
             NotificationHistoryList = new ObservableCollection<SaveNotification>();
             _noiticeListener = noiticeListener;
             _noiticeListener.DeviceLinkedMsg = NewDevicePacketReceived;
+            _noiticeListener.NewNotification = NewNotification;
+
             noiticeListener.StartListening();
             NewDeviceCmd = new RelayCommand(AddNewDevice);
+            ClosePopUpCmd = new RelayCommand(()=>QrPopUp=false);
         }
 
         public RelayCommand NewDeviceCmd { get; private set; }
+        public RelayCommand ClosePopUpCmd { get; private set; }
+
 
         public int OffsetX
         {

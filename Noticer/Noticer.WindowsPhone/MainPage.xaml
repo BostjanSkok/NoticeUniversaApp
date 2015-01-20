@@ -9,9 +9,12 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Popup Name="QrPopupControl" IsOpen="{Binding QrPopUp}" Grid.ColumnSpan="4" Grid.RowSpan="3"
+        <Popup Name="QrPopupControl" IsLightDismissEnabled="True" IsOpen="{Binding QrPopUp}"
                Width="200" Height="200">
-            <Image Width="200" Height="200" Source="{Binding QrImage}" />
+            <StackPanel>
+                <Image Width="200" Height="200" Source="{Binding QrImage}" />
+                <Button Content="Close" Command="{Binding ClosePopUpCmd}" />
+            </StackPanel>
         </Popup>
         <Pivot Title="Noticer">
             <!--Pivot item one-->
@@ -51,8 +54,8 @@
         </Pivot>
     </Grid>
     <Page.BottomAppBar>
-        <CommandBar IsOpen="True">
-            <AppBarButton Label="Add" Icon="Add" Command='{Binding NewDeviceCmd}' />
+        <CommandBar IsOpen="False">
+            <AppBarButton Label="Add" Icon="Add" Click="ButtonBase_OnClick" />
             <AppBarButton Label="Remove" Icon="Remove" Visibility="{Binding ShowWhenDeviceSelected}" />
         </CommandBar>
     </Page.BottomAppBar>

@@ -51,6 +51,7 @@ namespace Noticer.Services
             if (str.StartsWith("*"))
             {
                 str = str.Trim();
+                if(DeviceLinkedMsg!=null)
                 DeviceLinkedMsg(str.Substring(1, str.Length - 1));
                 return;
             }
@@ -59,6 +60,7 @@ namespace Noticer.Services
             if (result == null)
                 return;
 
+            if(NewNotification!=null)
              NewNotification(result);
 
 
@@ -114,5 +116,7 @@ namespace Noticer.Services
         void StartListening();
         void StopService();
         Action<String> DeviceLinkedMsg { get; set; }
+        Action<SaveNotification> NewNotification { get; set; }
+
     }
 }

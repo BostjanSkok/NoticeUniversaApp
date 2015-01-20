@@ -18,9 +18,11 @@
         </Grid.ColumnDefinitions>
         <Popup Name="QrPopupControl" IsOpen="{Binding QrPopUp}" Grid.ColumnSpan="4" Grid.RowSpan="3"
                Width="200" Height="200">
-     
+            <StackPanel>
                 <Image Width="200" Height="200" Source="{Binding QrImage}" />
-          
+                <Button Content="Close" Command="{Binding ClosePopUpCmd}" />
+            </StackPanel>
+
         </Popup>
         
         <TextBlock Text="Noticer" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,24" TextAlignment="Left"
