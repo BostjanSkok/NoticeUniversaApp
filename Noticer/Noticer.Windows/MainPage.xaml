@@ -1,0 +1,71 @@
+﻿<Page x:Class="Noticer.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d" DataContext="{Binding MainPageVM,Source={StaticResource Locator}}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140" />
+            <RowDefinition />
+            <RowDefinition Height="130" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="40" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Popup Name="QrPopupControl" IsOpen="{Binding QrPopUp}" Grid.ColumnSpan="4" Grid.RowSpan="3"
+               Width="200" Height="200">
+     
+                <Image Width="200" Height="200" Source="{Binding QrImage}" />
+          
+        </Popup>
+        
+        <TextBlock Text="Noticer" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,24" TextAlignment="Left"
+                   VerticalAlignment="Bottom" FontSize="42" />
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <TextBlock Text="Linked Devices" Margin="0,24" TextAlignment="Left" VerticalAlignment="Bottom"
+                       FontSize="20" />
+            <ListView Margin="12" Name="DeviceList" ItemsSource="{Binding LinkedDevices}"
+                      SelectedItem="{Binding SelectedDevice}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding DeviceName}" FontSize="26" Margin="20,0,0,0" />
+                            <TextBlock FontSize="12" Margin="20,0,0,0">
+                                <Run Text="Added: " />
+                                <Run Text="{Binding AddedOn}" />
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        <StackPanel Grid.Column="3" Grid.Row="1">
+            <TextBlock Text="Notification history" Margin="0,24" TextAlignment="Left" VerticalAlignment="Bottom"
+                       FontSize="20" />
+            <ListView Name="HistoryList" Margin="12" ItemsSource="{Binding NotificationHistoryList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Title}" FontSize="26" Margin="20,0,0,0" />
+                            <TextBlock Text="{Binding Path=Text}" MaxLines="5" FontSize="12" Margin="20,0,0,0" />
+                            <TextBlock FontSize="12" Margin="20,0,0,0">
+                                <Run Text="Received: " />
+                                <Run Text="{Binding ReceivedOn}" />
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+    </Grid>
+    <Page.BottomAppBar>
+        <CommandBar IsOpen="True">
+            <AppBarButton Label="Add" Icon="Add" Command='{Binding NewDeviceCmd}' />
+            <AppBarButton Label="Remove" Icon="Remove" Visibility="{Binding ShowWhenDeviceSelected}" />
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>

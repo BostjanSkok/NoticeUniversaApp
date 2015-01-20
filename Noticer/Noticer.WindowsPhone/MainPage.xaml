@@ -1,0 +1,59 @@
+﻿<Page
+    x:Class="Noticer.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Noticer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" DataContext="{Binding MainPageVM, Source={StaticResource Locator}}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Popup Name="QrPopupControl" IsOpen="{Binding QrPopUp}" Grid.ColumnSpan="4" Grid.RowSpan="3"
+               Width="200" Height="200">
+            <Image Width="200" Height="200" Source="{Binding QrImage}" />
+        </Popup>
+        <Pivot Title="Noticer">
+            <!--Pivot item one-->
+            <PivotItem Header="History">
+                <ListView Name="HistoryList" Margin="12" ItemsSource="{Binding NotificationHistoryList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Title}" FontSize="26" Margin="20,0,0,0" />
+                                <TextBlock Text="{Binding Path=Text}" MaxLines="5" FontSize="12" Margin="20,0,0,0" />
+                                <TextBlock FontSize="12" Margin="20,0,0,0">
+                                    <Run Text="Received: " />
+                                    <Run Text="{Binding ReceivedOn}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </PivotItem>
+
+            <!--Pivot item two-->
+            <PivotItem Header="Linked devices">
+                <ListView Margin="12" Name="DeviceList" ItemsSource="{Binding LinkedDevices}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding DeviceName}" FontSize="26" Margin="20,0,0,0" />
+                                <TextBlock FontSize="12" Margin="20,0,0,0">
+                                    <Run Text="Added: " />
+                                    <Run Text="{Binding AddedOn}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </PivotItem>
+        </Pivot>
+    </Grid>
+    <Page.BottomAppBar>
+        <CommandBar IsOpen="True">
+            <AppBarButton Label="Add" Icon="Add" Command='{Binding NewDeviceCmd}' />
+            <AppBarButton Label="Remove" Icon="Remove" Visibility="{Binding ShowWhenDeviceSelected}" />
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>
